@@ -530,6 +530,35 @@ body {
   font-weight: 700;
 }
 
+.day-add-btn {
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted, var(--text));
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.day-group:hover .day-add-btn,
+.day-add-btn:focus-visible {
+  opacity: 1;
+}
+
+.day-add-btn:hover {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--primary-hover);
+}
+
 .event-cards {
   display: flex;
   flex-direction: column;

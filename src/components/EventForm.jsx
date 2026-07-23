@@ -4,7 +4,7 @@ import { CATEGORIES, REMIND_OPTIONS } from '../i18n'
 import { toDatetimeLocalValue } from '../utils/datetime'
 
 // Modal thêm/sửa sự kiện. `initial` = sự kiện đang sửa (null nếu thêm mới).
-export default function EventForm({ t, initial, onSave, onClose }) {
+export default function EventForm({ t, initial, prefill, onSave, onClose }) {
   const [title, setTitle] = useState('')
   const [datetime, setDatetime] = useState('')
   const [category, setCategory] = useState('exam')
@@ -20,10 +20,10 @@ export default function EventForm({ t, initial, onSave, onClose }) {
       setNote(initial.note || '')
       setRemindBefore(initial.remindBefore || 0)
     } else {
-      // Mặc định: thời điểm hiện tại làm gợi ý
-      setDatetime(toDatetimeLocalValue(Date.now()))
+      // Thêm nhanh cùng ngày: dùng ngày sẵn có; nếu không thì lấy hiện tại.
+      setDatetime(toDatetimeLocalValue(prefill?.datetime || Date.now()))
     }
-  }, [initial])
+  }, [initial, prefill])
 
   // Đóng bằng phím Esc
   useEffect(() => {

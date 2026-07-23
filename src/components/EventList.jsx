@@ -21,7 +21,7 @@ function groupByDay(list) {
 
 // Danh sách sự kiện chia 2 nhóm: Sắp tới (tăng dần) và Đã qua (mới nhất trước),
 // mỗi nhóm gom tiếp theo từng ngày.
-export default function EventList({ t, lang, events, now, onEdit, onDelete }) {
+export default function EventList({ t, lang, events, now, onEdit, onDelete, onAddOnDay }) {
   const upcoming = events
     .filter((e) => new Date(e.datetime).getTime() >= now)
     .sort((a, b) => new Date(a.datetime) - new Date(b.datetime))
@@ -41,6 +41,15 @@ export default function EventList({ t, lang, events, now, onEdit, onDelete }) {
             <h3 className="day-heading">
               {formatDayHeading(day.iso, lang)}
               <span className="day-count">{day.events.length}</span>
+              <button
+                type="button"
+                className="day-add-btn"
+                title={t.addOnDay}
+                aria-label={t.addOnDay}
+                onClick={() => onAddOnDay(day.iso)}
+              >
+                +
+              </button>
             </h3>
             <motion.div className="event-cards" layout>
               <AnimatePresence mode="popLayout" initial={false}>

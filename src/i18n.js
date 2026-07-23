@@ -9,6 +9,7 @@ export const translations = {
     allCategories: 'Tất cả danh mục',
     upcoming: 'Sắp tới',
     past: 'Đã qua',
+    addOnDay: 'Thêm sự kiện cùng ngày này',
     noEvents: 'Chưa có sự kiện nào. Hãy thêm sự kiện đầu tiên!',
     noResults: 'Không tìm thấy sự kiện phù hợp.',
     // form
@@ -71,6 +72,7 @@ export const translations = {
     allCategories: 'All categories',
     upcoming: 'Upcoming',
     past: 'Past',
+    addOnDay: 'Add another event on this day',
     noEvents: 'No events yet. Add your first one!',
     noResults: 'No matching events found.',
     title: 'Title',
