@@ -1,7 +1,26 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import EventCard from './EventCard'
+import { dayKey, formatDayHeading } from '../utils/datetime'
 
-// Danh sách sự kiện chia 2 nhóm: Sắp tới (tăng dần) và Đã qua (mới nhất trước).
+// Gom danh sách (đã sắp xếp) thành các nhóm theo ngày, giữ nguyên thứ tự.
+function groupByDay(list) {
+  const groups = []
+  const index = new Map()
+  for (const e of list) {
+    const key = dayKey(e.datetime)
+    let g = index.get(key)
+    if (!g) {
+      g = { key, iso: e.datetime, events: [] }
+      index.set(key, g)
+      groups.push(g)
+    }
+    g.events.push(e)
+  }
+  return groups
+}
+
+// Danh sách sự kiện chia 2 nhóm: Sắp tới (tăng dần) và Đã qua (mới nhất trước),
+// mỗi nhóm gom tiếp theo từng ngày.
 export default function EventList({ t, lang, events, now, onEdit, onDelete }) {
   const upcoming = events
     .filter((e) => new Date(e.datetime).getTime() >= now)
@@ -17,21 +36,29 @@ export default function EventList({ t, lang, events, now, onEdit, onDelete }) {
         <h2 className="group-title">
           {label} <span className="group-count">{list.length}</span>
         </h2>
-        <motion.div className="event-cards" layout>
-          <AnimatePresence mode="popLayout" initial={false}>
-            {list.map((e) => (
-              <EventCard
-                key={e.id}
-                t={t}
-                lang={lang}
-                event={e}
-                now={now}
-                onEdit={onEdit}
-                onDelete={onDelete}
-              />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        {groupByDay(list).map((day) => (
+          <div className="day-group" key={day.key}>
+            <h3 className="day-heading">
+              {formatDayHeading(day.iso, lang)}
+              <span className="day-count">{day.events.length}</span>
+            </h3>
+            <motion.div className="event-cards" layout>
+              <AnimatePresence mode="popLayout" initial={false}>
+                {day.events.map((e) => (
+                  <EventCard
+                    key={e.id}
+                    t={t}
+                    lang={lang}
+                    event={e}
+                    now={now}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                  />
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        ))}
       </section>
     )
 

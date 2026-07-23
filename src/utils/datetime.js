@@ -22,6 +22,33 @@ export function formatDateTime(iso, lang) {
   })
 }
 
+// Khóa nhóm theo ngày (giờ địa phương): "YYYY-MM-DD".
+export function dayKey(iso) {
+  const d = new Date(iso)
+  const pad = (n) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+}
+
+// Tiêu đề ngày cho mỗi nhóm: "Thứ Hai, 04/08/2026".
+export function formatDayHeading(iso, lang) {
+  const d = new Date(iso)
+  return d.toLocaleDateString(lang === 'vi' ? 'vi-VN' : 'en-US', {
+    weekday: 'long',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
+}
+
+// Chỉ giờ trong ngày: "14:30".
+export function formatTime(iso, lang) {
+  const d = new Date(iso)
+  return d.toLocaleTimeString(lang === 'vi' ? 'vi-VN' : 'en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
 // Trả về phần chi tiết đếm ngược giữa now và target.
 // diff > 0 => còn tới; diff < 0 => đã qua.
 export function getCountdown(targetIso, now) {

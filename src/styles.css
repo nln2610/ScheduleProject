@@ -503,6 +503,33 @@ body {
   font-style: normal;
 }
 
+/* ---- Day sub-groups within a section ---- */
+.day-group {
+  margin-bottom: 24px;
+}
+
+.day-heading {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  color: var(--text-muted, var(--text));
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.day-count {
+  background: var(--border-soft);
+  color: var(--text);
+  border-radius: var(--radius-pill);
+  padding: 1px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
 .event-cards {
   display: flex;
   flex-direction: column;
