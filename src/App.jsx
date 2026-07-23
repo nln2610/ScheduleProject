@@ -27,6 +27,7 @@ export default function App() {
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState(null)
+  const [prefill, setPrefill] = useState(null)
 
   const now = useNow(1000)
 
@@ -66,17 +67,29 @@ export default function App() {
 
   function openAdd() {
     setEditing(null)
+    setPrefill(null)
+    setFormOpen(true)
+  }
+
+  // Thêm nhanh vào một ngày sẵn có: giữ nguyên ngày, giờ mặc định 09:00.
+  function openAddOnDay(iso) {
+    const d = new Date(iso)
+    d.setHours(9, 0, 0, 0)
+    setEditing(null)
+    setPrefill({ datetime: d.toISOString() })
     setFormOpen(true)
   }
 
   function openEdit(event) {
     setEditing(event)
+    setPrefill(null)
     setFormOpen(true)
   }
 
   function closeForm() {
     setFormOpen(false)
     setEditing(null)
+    setPrefill(null)
   }
 
   // ---- Lọc + tìm kiếm ----
@@ -206,6 +219,7 @@ export default function App() {
             now={now}
             onEdit={openEdit}
             onDelete={handleDelete}
+            onAddOnDay={openAddOnDay}
           />
         )}
       </div>
@@ -215,6 +229,7 @@ export default function App() {
           <EventForm
             t={t}
             initial={editing}
+            prefill={prefill}
             onSave={handleSave}
             onClose={closeForm}
           />
